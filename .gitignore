@@ -1,0 +1,14 @@
+# Downloaded and intermediate data (recreated by scripts/01_prepare_data.py)
+data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
