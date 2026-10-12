@@ -1,4 +1,4 @@
-"""Step 4: score every embedding with the same metrics, then write the results tables."""
+"""Step 4: score every embedding with the same metrics, then write the results tables and figures."""
 
 from pathlib import Path
 
@@ -15,10 +15,12 @@ from pbmc_fm.evaluate import (
     marker_detection,
     per_type_summary,
 )
+from pbmc_fm.plots import plot_metrics, plot_umaps, umap_coordinates
 
 ROOT = Path(__file__).resolve().parents[1]
 INPUT_PATH = ROOT / "data" / "pbmc3k_labelled.h5ad"
 RESULTS_DIR = ROOT / "results"
+FIGURES_DIR = ROOT / "figures"
 
 # Name -> (file written by scripts 02/03, title for figures). Rows follow data/pbmc3k_labelled.h5ad.
 EMBEDDINGS = {
@@ -27,12 +29,14 @@ EMBEDDINGS = {
 }
 
 set_seeds()
+FIGURES_DIR.mkdir(exist_ok=True)
 adata = ad.read_h5ad(INPUT_PATH)
 labels = adata.obs["cell_type"].to_numpy()
 
 metric_rows = {}
 sweeps = []
 per_type = pd.DataFrame({"n_cells": pd.Series(labels).value_counts()})
+umaps = {}
 for name, (path, title) in EMBEDDINGS.items():
     embedding = np.load(path)
     assert embedding.shape[0] == adata.n_obs, f"{path.name}: {embedding.shape[0]} rows, expected {adata.n_obs}"
@@ -55,6 +59,7 @@ for name, (path, title) in EMBEDDINGS.items():
         composition = cluster_composition(adata, leiden_clusters(embedding, resolution))
         composition.to_csv(RESULTS_DIR / f"leiden_composition_{name}_res{resolution}.csv", float_format="%.2f")
 
+    umaps[title] = umap_coordinates(embedding)
 
 metrics_table = pd.DataFrame.from_dict(metric_rows, orient="index")
 metrics_table.index.name = "embedding"
@@ -65,6 +70,8 @@ per_type.to_csv(RESULTS_DIR / "knn_per_cell_type.csv", float_format="%.3f")
 # Supports the biological interpretation in the README: which markers each cell type expresses.
 marker_detection(adata).to_csv(RESULTS_DIR / "marker_detection.csv", float_format="%.2f")
 
+plot_umaps(umaps, labels, FIGURES_DIR / "umap_pca_vs_geneformer.png")
+plot_metrics(metrics_table, {name: title for name, (_, title) in EMBEDDINGS.items()}, FIGURES_DIR / "metrics.png")
 
 print("\nMetrics (results/metrics.csv):")
 print(metrics_table.round(3).to_string())
