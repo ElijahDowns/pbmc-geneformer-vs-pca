@@ -26,6 +26,7 @@ FIGURES_DIR = ROOT / "figures"
 EMBEDDINGS = {
     "pca": (RESULTS_DIR / "pca_embedding.npy", "Scanpy PCA (50 PCs)"),
     "geneformer": (RESULTS_DIR / "geneformer_embedding.npy", "Geneformer, final layer (512-d)"),
+    "geneformer_layer11": (RESULTS_DIR / "geneformer_layer11_embedding.npy", "Geneformer, second-to-last layer (512-d)"),
 }
 
 set_seeds()
