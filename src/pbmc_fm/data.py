@@ -12,6 +12,7 @@ EXPECTED_N_CELLS = 2638
 
 def load_raw_counts(data_dir):
     """Download (first call only) and return the raw PBMC3k UMI counts: 2,700 cells x 32,738 genes."""
+    Path(data_dir).mkdir(parents=True, exist_ok=True)
     sc.settings.datasetdir = Path(data_dir)
     raw = sc.datasets.pbmc3k()
     # Some gene symbols appear twice; Ensembl IDs are unique and stay in var["gene_ids"].
@@ -21,6 +22,7 @@ def load_raw_counts(data_dir):
 
 def load_labels(data_dir):
     """Return the cell-type label of every cell in Scanpy's processed PBMC3k, indexed by barcode."""
+    Path(data_dir).mkdir(parents=True, exist_ok=True)
     sc.settings.datasetdir = Path(data_dir)
     processed = sc.datasets.pbmc3k_processed()
     return processed.obs["louvain"].copy()
