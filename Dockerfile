@@ -14,4 +14,6 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-install-project --no-cache
 
 ENV PATH="/opt/venv/bin:$PATH" \
-    PYTHONPATH=/work/src
+    PYTHONPATH=/work/src \
+    # Keep numba's compiled code (UMAP, QC metrics) in the cache volume so it is built only once.
+    NUMBA_CACHE_DIR=/root/.cache/numba

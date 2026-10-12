@@ -26,6 +26,8 @@ packages = ["src/pbmc_fm"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Import the package from src/ even when it has not been installed.
+pythonpath = ["src"]
 
 [tool.uv]
 # torch 2.10.0 (pinned by helical) has no wheel for Intel Macs, so only these platforms are supported.
