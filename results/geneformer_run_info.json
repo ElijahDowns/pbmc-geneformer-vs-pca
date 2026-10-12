@@ -8,7 +8,7 @@
   "embedding_dim": 512,
   "n_genes": 13656,
   "n_genes_in_vocabulary": 11842,
-  "runtime_seconds": 2460.9,
+  "runtime_seconds": 2085.7,
   "torch_threads": 4,
   "helical_version": "3.1.3",
   "torch_version": "2.10.0+cpu",

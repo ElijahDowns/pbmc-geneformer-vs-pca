@@ -99,7 +99,7 @@ def plot_umaps(umaps, labels, path):
         fontsize=10,
         labelcolor=SECONDARY_INK,
     )
-    fig.subplots_adjust(bottom=0.12, wspace=0.05)
+    fig.subplots_adjust(bottom=0.12, wspace=0.15)
     fig.savefig(path, dpi=150, facecolor=SURFACE, bbox_inches="tight")
     plt.close(fig)
 
@@ -138,7 +138,9 @@ def plot_metrics(metrics, titles, path):
     for spine in ax.spines.values():
         spine.set_visible(False)
 
-    ax.legend(loc="upper right", frameon=False, fontsize=9.5, labelcolor=SECONDARY_INK)
-    ax.set_title("Same cells, labels and metrics for every embedding", loc="left", fontsize=12, color=INK)
+    # One row between the title and the plot, so the legend never covers a bar or its value.
+    ax.legend(loc="lower left", bbox_to_anchor=(0, 1.0), ncol=n_embeddings, frameon=False, fontsize=9.5,
+              labelcolor=SECONDARY_INK)
+    ax.set_title("Same cells, labels and metrics for every embedding", loc="left", fontsize=12, color=INK, pad=30)
     fig.savefig(path, dpi=150, facecolor=SURFACE, bbox_inches="tight")
     plt.close(fig)

@@ -7,7 +7,7 @@ What I learned running Geneformer through `helical==3.1.3` for this comparison. 
 - `GeneformerConfig(model_name="gf-12L-38M-i4096", batch_size=1, device="cpu", emb_mode="cell")`, with `emb_layer=-1` (Helical's default, the final layer) and, as a third row, `emb_layer=11` (see the last section).
 - 12 transformer layers, hidden size 512, 8 attention heads, 38.0M parameters. Input is `<cls>`, then up to 4,094 genes ranked by expression, then `<eos>`. `emb_mode="cell"` averages the gene-token outputs, leaving out `<cls>`, `<eos>` and padding.
 - Vocabulary overlap: 11,842 of the 13,656 PBMC3k genes detected in at least 3 cells (86.7%) have an Ensembl ID in Geneformer's 20,275-token vocabulary. No cell has more than 2,413 detected genes, so none was truncated.
-- Runtime: 41 minutes for the 2,638 cells (0.93 s per cell), plus a 2-minute smoke test on 100 cells, on a 4-core Intel i5-1030NG7 laptop, CPU only, inside Docker with 4 PyTorch threads.
+- Runtime: 34.8 minutes for the 2,638 cells with the final layer and 33.8 minutes with the second-to-last (about 0.8 s per cell), each after a 2-minute smoke test on 100 cells. Measured on a 4-core Intel i5-1030NG7 laptop, CPU only, inside Docker with 4 PyTorch threads; an earlier identical run took 41 minutes, so expect some variation with temperature.
 
 ## `process_data()` writes onto the AnnData you pass in
 
@@ -45,4 +45,4 @@ Helical uses `emb_layer` as a Python index into the model's 13 hidden states (th
 | `11` | second-to-last layer | not allowed |
 | `-2`, `12` | rejected with `ValueError` | not allowed |
 
-The original documentation recommends the second-to-last layer: "The last layer is most specifically weighted to optimize the given learning objective. Generally, it is best to extract the 2nd to last layer to get a more general representation." To get that layer in Helical this repo uses `emb_layer=11`, since `-2` is rejected.
+The original documentation recommends the second-to-last layer: "The last layer is most specifically weighted to optimize the given learning objective. Generally, it is best to extract the 2nd to last layer to get a more general representation." To get that layer in Helical this repo uses `emb_layer=11`, since `-2` is rejected. On PBMC3k it scored lower than the final layer on every metric (README).
