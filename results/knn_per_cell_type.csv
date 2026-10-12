@@ -1,0 +1,9 @@
+cell_type,n_cells,pca_accuracy,pca_most_confused_with,pca_confused_share,geneformer_accuracy,geneformer_most_confused_with,geneformer_confused_share
+CD4 T cells,1144,0.990,CD8 T cells,0.005,0.968,CD8 T cells,0.024
+CD14+ Monocytes,480,0.992,FCGR3A+ Monocytes,0.008,0.969,FCGR3A+ Monocytes,0.027
+B cells,342,0.985,CD4 T cells,0.009,0.988,CD4 T cells,0.006
+CD8 T cells,316,0.671,CD4 T cells,0.326,0.816,CD4 T cells,0.152
+NK cells,154,0.838,CD8 T cells,0.162,0.942,CD8 T cells,0.058
+FCGR3A+ Monocytes,150,0.880,CD14+ Monocytes,0.120,0.940,CD14+ Monocytes,0.060
+Dendritic cells,37,0.784,CD14+ Monocytes,0.162,0.865,CD14+ Monocytes,0.135
+Megakaryocytes,15,0.800,CD8 T cells,0.133,0.733,CD14+ Monocytes,0.133

@@ -1,0 +1,6 @@
+cluster,B cells,CD14+ Monocytes,CD4 T cells,CD8 T cells,Dendritic cells,FCGR3A+ Monocytes,Megakaryocytes,NK cells,median_genes_detected,CCR7_detected,S100A4_detected
+0,1,0,1134,306,0,0,1,11,814.00,0.30,0.83
+1,339,0,4,0,0,0,0,0,674.00,0.16,0.36
+2,2,480,5,0,37,150,3,0,971.00,0.03,1.00
+3,0,0,1,10,0,0,0,143,873.50,0.02,0.93
+4,0,0,0,0,0,0,11,0,338.00,0.00,0.18
